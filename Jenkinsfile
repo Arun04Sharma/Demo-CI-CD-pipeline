@@ -1,8 +1,9 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'Maven'
+    agent {
+        docker {
+            image 'maven:3.9.6-eclipse-temurin-17'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
 
     stages {
@@ -23,15 +24,6 @@ pipeline {
             steps {
                 sh 'docker build -t demo-app:1.0 .'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build and Docker image creation successful'
-        }
-        failure {
-            echo 'Build failed'
         }
     }
 }
