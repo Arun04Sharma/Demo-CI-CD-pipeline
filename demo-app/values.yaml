@@ -1,8 +1,8 @@
-replicaCount: 2
+replicaCount: 5
 
 image:
-  repository: arun04sharma/deployment
-  tag: "1.0"
+  repository: sharma04arun/deployment
+  tag: "6"
   pullPolicy: Always
 
 service:
