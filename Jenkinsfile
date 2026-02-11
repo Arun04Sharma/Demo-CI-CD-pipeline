@@ -31,11 +31,10 @@ pipeline {
                 usernameVariable: 'DOCKER_USER',
                 passwordVariable: 'DOCKER_PASS'
             )]) {
-                // Notice the \$ and the use of single quotes for the main block
                 sh '''
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                    docker build -t arun04sharma/deployment:${BUILD_NUMBER} .
-                    docker push arun04sharma/deployment:${BUILD_NUMBER}
+                    docker build -t sharma04arun/deployment:${BUILD_NUMBER} .
+                    docker push sharma04arun/deployment:${BUILD_NUMBER}
                 '''
             }
         }
