@@ -1,8 +1,9 @@
-replicaCount: 1
+replicaCount: 2
 
 image:
-  repository: demo-app
+  repository: arun04sharma/deployment
   tag: "1.0"
+  pullPolicy: Always
 
 service:
   type: NodePort
