@@ -11,22 +11,32 @@ pipeline {
         }
 
         stage('Build JAR') {
-            agent {
-                docker {
-                    image 'maven:3.9.6-eclipse-temurin-17'
-                }
-            }
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    steps {
+        bat 'mvn clean package -DskipTests'
+    }
+}
 
-        stage('Build Docker Image') {
-            agent any
-            steps {
-                sh 'docker build -t demo-app:1.0 .'
+        stage('Docker Build & Push') {
+    steps {
+        script {
+            withCredentials([usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+            )]) {
+                sh """
+                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                docker build -t arun04sharma/deployment:${BUILD_NUMBER} .
+                docker push arun04sharma/deployment:${BUILD_NUMBER}
+                """
             }
         }
+    }
+}
     }
 
     post {
