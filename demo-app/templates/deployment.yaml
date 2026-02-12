@@ -12,11 +12,11 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+          - name: regcred
       containers:
         - name: demo-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: IfNotPresent
-          imagePullSecrets:
-          - name: regcred
           ports:
             - containerPort: {{ .Values.service.port }}
