@@ -57,7 +57,7 @@ pipeline {
                     // Agar values.yaml root mein hai toh sirf 'values.yaml' likhna
                     sh "sed -i 's/tag: .*/tag: \"${IMAGE_TAG}\"/' demo-app/values.yaml"
 
-                    sh "git add values.yaml"
+                    sh "git add demo-app/values.yaml"
                     sh "git commit -m 'Update image tag to ${IMAGE_TAG} [skip ci]'"
                     
                     withCredentials([usernamePassword(
